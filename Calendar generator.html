@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Calendar</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Smart Calendar</h1>
+    
+    
+    
+   
+
+    <script>
+        // Function to update the date on the page
+        function updateDate() {
+            var currentDate = new Date();
+            var day = currentDate.getDate();
+            var month = currentDate.getMonth() + 1; // January is 0, so add 1
+            var year = currentDate.getFullYear();
+            var hours = currentDate.getHours();
+            var minutes = currentDate.getMinutes();
+            var seconds = currentDate.getSeconds();
+            var ampm = hours >= 12 ? 'PM' : 'AM'; // Determine if it's AM or PM
+
+            // Convert hours to 12-hour format
+            hours = hours % 12;
+            hours = hours ? hours : 12; // If hours is 0, set it to 12
+
+            // Add leading zero to single-digit days, months, hours, minutes, and seconds
+            day = (day < 10) ? '0' + day : day;
+            month = (month < 10) ? '0' + month : month;
+            hours = (hours < 10) ? '0' + hours : hours;
+            minutes = (minutes < 10) ? '0' + minutes : minutes;
+            seconds = (seconds < 10) ? '0' + seconds : seconds;
+
+            // Display the date and time on the page
+            document.getElementById('runningDate').innerHTML = day + '/' + month + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+
+            // Schedule the function to run again after 1 second (1000 milliseconds)
+            setTimeout(updateDate, 1000);
+        }
+
+        // Start the date update function when the page loads
+        window.onload = updateDate;
+    </script>
+</head>
+<body>
+    <h3>Check on Date and Time below:</h3>
+    <p id="runningDate"></p>
+</body>
+</html>
+    <table>
+        <thead>
+            <tr>
+                <th colspan="7">
+                    <button onclick="previousMonth()">Prev Month</button>
+                    <span id="monthYear"></span>
+                    <button onclick="nextMonth()">Next Month</button>
+                </th>
+            </tr>
+            <tr>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+            </tr>
+        </thead>
+        <tbody id="calendarBody"></tbody>
+    </table>
+
+    <script>
+        function generateCalendar(year, month) {
+            var calendarBody = document.getElementById("calendarBody");
+            var monthYear = document.getElementById("monthYear");
+            calendarBody.innerHTML = "";
+            var date = new Date(year, month);
+            var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+            var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+            var day = 1;
+
+            monthYear.textContent = date.toLocaleString('default', { month: 'long' }) + " " + date.getFullYear();
+
+            for (var i = 0; i < 6; i++) {
+                var row = document.createElement("tr");
+
+                for (var j = 0; j < 7; j++) {
+                    if (i === 0 && j < firstDay.getDay()) {
+                        var cell = document.createElement("td");
+                        row.appendChild(cell);
+                    } else if (day > lastDay.getDate()) {
+                        break;
+                    } else {
+                        var cell = document.createElement("td");
+                        cell.textContent = day;
+                        row.appendChild(cell);
+                        day++;
+                    }
+                }
+
+                calendarBody.appendChild(row);
+
+                if (day > lastDay.getDate()) {
+                    break;
+                }
+            }
+        }
+
+        function previousMonth() {
+            var monthYear = document.getElementById("monthYear").textContent;
+            var month = new Date(monthYear).getMonth();
+            var year = new Date(monthYear).getFullYear();
+            if (month === 0) {
+                month = 11;
+                year--;
+            } else {
+                month--;
+            }
+            generateCalendar(year, month);
+        }
+
+        function nextMonth() {
+            var monthYear = document.getElementById("monthYear").textContent;
+            var month = new Date(monthYear).getMonth();
+            var year = new Date(monthYear).getFullYear();
+            if (month === 11) {
+                month = 0;
+                year++;
+            } else {
+                month++;
+            }
+            generateCalendar(year, month);
+        }
+
+        // Initial generation of the calendar
+        var today = new Date();
+        generateCalendar(today.getFullYear(), today.getMonth());
+    </script>
+</body>
+</html>
+
+
+<h3>Proudly brought to you by:</h3>
+<h><u><b>McOwino</b></u></h><br><hr><hr><br>
+  <style>
+    .circular-image {
+      width: 100px;
+      height:100px;
+      border-radius: 500%;
+      overflow: hidden;
+    }
+
+    .circular-image img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="circular-image">
+    <img src="IMG_20230217_171905~2.jpg" alt="Circular Image">
+  </div>
+</body>
+<h><u><b></b></u></h><br><hr><hr><br>
+</html>
